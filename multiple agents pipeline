@@ -1,0 +1,21 @@
+pipeline {
+    agent none // No global agent; each stage specifies its own agent
+    stages {
+        stage('Build') {
+            agent {
+                docker { image 'maven:3.8.4-openjdk-11' }
+            }
+            steps {
+                sh 'mvn --version'
+            }
+        }
+        stage('Test') {
+            agent {
+                docker { image 'node:16.13.1-alpine' }
+            }
+            steps {
+                sh 'node --version'
+            }
+        }
+    }
+}
